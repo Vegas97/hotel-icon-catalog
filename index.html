@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Check-in / Check-out — Icon Catalog</title>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<style>
+  :root{
+    /* palette sampled from the original screenshots */
+    --navy:#413D5A; --navy2:#4A465F; --gold:#E5B362; --gold2:#EAC261;
+    --teal:#5EA3A1; --white:#FFFFFF; --lav:#EFF0F7; --ink:#2B2B3A; --mute:#8A88A0;
+    /* live preview controls */
+    --icon-color:var(--gold2); --icon-bg:var(--navy); --icon-size:30px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--lav);line-height:1.45}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 80px}
+
+  header h1{margin:0 0 4px;font-size:26px;letter-spacing:-.02em}
+  header p{margin:0;color:#555;max-width:760px}
+  .sub{font-size:14px}
+
+  /* palette legend */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+  .chip{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e3e2ef;
+    border-radius:10px;padding:6px 10px;font-size:12px;font-variant-numeric:tabular-nums}
+  .dot{width:16px;height:16px;border-radius:5px;border:1px solid rgba(0,0,0,.08)}
+
+  /* toolbar */
+  .toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #e3e2ef;
+    border-radius:14px;padding:12px 16px;margin:14px 0 26px;box-shadow:0 4px 18px rgba(65,61,90,.06)}
+  .toolbar .grp{display:flex;align-items:center;gap:6px}
+  .toolbar label{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .btn{cursor:pointer;border:1px solid #d8d6e6;background:#fff;border-radius:9px;padding:6px 11px;
+    font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+  .btn:hover{border-color:#bcb9d4}
+  .btn.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(65,61,90,.12)}
+  .btn .sw{width:13px;height:13px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
+  input[type=range]{accent-color:var(--navy)}
+
+  /* live menu mockup */
+  .mock{display:grid;grid-template-columns:260px 1fr;gap:24px;margin:0 0 30px;align-items:start}
+  .panel{background:var(--navy);border-radius:16px;padding:18px 14px;box-shadow:0 12px 34px rgba(65,61,90,.28)}
+  .panel .mi{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:9px;cursor:default}
+  .panel .mi iconify-icon{font-size:22px;color:var(--gold2);width:24px;text-align:center}
+  .panel .mi span{color:#fff;font-size:15px}
+  .panel .mi.active span{color:var(--gold2);font-weight:600}
+  .panel .mi:hover{background:rgba(255,255,255,.05)}
+  .panel .sep{height:1px;background:rgba(255,255,255,.12);margin:8px 6px}
+  .mocknote{font-size:13px;color:#555;align-self:center}
+  .mocknote b{color:var(--ink)}
+
+  /* sections */
+  section.grp-sec{margin:34px 0 0}
+  .grp-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 4px}
+  .grp-head h2{margin:0;font-size:19px;letter-spacing:-.01em}
+  .replaces{font-size:12px;color:#fff;background:var(--navy);border-radius:999px;padding:3px 10px}
+  .replaces code{color:var(--gold2);font-size:11px}
+  .grp-desc{margin:2px 0 16px;color:#666;font-size:13.5px}
+
+  /* icon grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:14px}
+  .card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid #e6e5f1;
+    border-radius:14px;padding:14px;text-decoration:none;transition:.14s;overflow:hidden}
+  .card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 10px 26px rgba(65,61,90,.12)}
+  .card.top{border-color:var(--gold);box-shadow:0 0 0 2px rgba(229,179,98,.35)}
+  .card.top::after{content:"★ TOP PICK";position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;
+    letter-spacing:.06em;color:#8a6d1f;background:var(--gold2);padding:3px 7px;border-radius:999px}
+  .preview{height:96px;border-radius:11px;background:var(--icon-bg);display:flex;align-items:center;
+    justify-content:center;margin-bottom:11px;transition:.14s}
+  .preview iconify-icon{font-size:var(--icon-size);color:var(--icon-color);transition:.14s}
+  .nm{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;font-weight:600;
+    word-break:break-all;display:flex;align-items:center;gap:6px}
+  .bundle{width:8px;height:8px;border-radius:50%;flex:none}
+  .bundle.in{background:#3fae6b} .bundle.ext{background:#c9c7d8}
+  .meta{font-size:11px;color:var(--mute);margin:4px 0 6px;display:flex;gap:8px;flex-wrap:wrap}
+  .pill{background:#f3f2fa;border-radius:6px;padding:1px 6px}
+  .note{font-size:11.5px;color:#777;flex:1}
+  .go{margin-top:9px;font-size:11.5px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:4px}
+  .card:hover .go{color:var(--gold)}
+
+  footer{margin-top:46px;font-size:12.5px;color:#777;border-top:1px solid #e0dfee;padding-top:18px}
+  footer code{background:#fff;border:1px solid #e3e2ef;border-radius:5px;padding:1px 6px;font-size:11.5px}
+  .keyrow{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hotel Check-in / Check-out — Icon Catalog</h1>
+    <p class="sub">Every icon found by the swarm, rendered live (Iconify) in the palette sampled from the original images. All are <b>monochrome</b> (single <code>currentColor</code>) — click any card to open its page and grab SVG / PNG / JSX in any color.</p>
+
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:#413D5A"></span>#413D5A navy</span>
+      <span class="chip"><span class="dot" style="background:#E5B362"></span>#E5B362 gold</span>
+      <span class="chip"><span class="dot" style="background:#EAC261"></span>#EAC261 gold·hi</span>
+      <span class="chip"><span class="dot" style="background:#5EA3A1"></span>#5EA3A1 teal</span>
+      <span class="chip"><span class="dot" style="background:#FFFFFF"></span>#FFFFFF white</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="grp">
+      <label>Icon color</label>
+      <button class="btn active" data-color="var(--gold2)"><span class="sw" style="background:#EAC261"></span>Gold</button>
+      <button class="btn" data-color="var(--teal)"><span class="sw" style="background:#5EA3A1"></span>Teal</button>
+      <button class="btn" data-color="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
+      <button class="btn" data-color="var(--ink)"><span class="sw" style="background:#2B2B3A"></span>Neutral</button>
+    </div>
+    <div class="grp">
+      <label>Tile</label>
+      <button class="btn active" data-bg="var(--navy)"><span class="sw" style="background:#413D5A"></span>Navy</button>
+      <button class="btn" data-bg="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
+      <button class="btn" data-bg="#F3F2FA"><span class="sw" style="background:#F3F2FA"></span>Light</button>
+    </div>
+    <div class="grp">
+      <label>Size</label>
+      <input type="range" min="18" max="56" value="30" id="size" />
+    </div>
+  </div>
+
+  <!-- live menu mockup -->
+  <div class="mock">
+    <div class="panel" id="panel"></div>
+    <div class="mocknote">
+      <b>Live menu preview</b> — the top-pick icons dropped into a mock of your real sidebar
+      (navy <code>#413D5A</code> + gold <code>#EAC261</code>). This is the monochrome,
+      one-color-from-code look the proposal is arguing for: change one CSS variable and the
+      whole set recolors. Use the toolbar above to try teal / neutral / white.
+    </div>
+  </div>
+
+  <main id="catalog"></main>
+
+  <footer>
+    <div><b>Legend:</b> <span style="color:#3fae6b">●</span> already in your bundled Iconify sets (zero-install) &nbsp;·&nbsp; <span style="color:#c9c7d8">●</span> external set (needs <code>@iconify-json/&lt;set&gt;</code> or use as React/Radix).</div>
+    <div class="keyrow">
+      <span>In your code (Iconify CSS): <code>&lt;span class="iconify lucide--plane-landing" /&gt;</code></span>
+      <span>Lucide React: <code>import { PlaneLanding } from "lucide-react"</code></span>
+    </div>
+  </footer>
+</div>
+
+<script>
+// bundled Iconify sets present in the project's package.json (@iconify-json/*)
+const BUNDLED = new Set(["bi","fa","fa-solid","fa6-solid","line-md","lucide","mage","material-symbols","mdi","mingcute","tabler"]);
+const iconifyUrl = n => "https://icon-sets.iconify.design/" + n.replace(":","/") + "/";
+
+const DATA = [
+  { label:"① Check-in (arrow IN) — login glyphs", replaces:"login / sign-in",
+    desc:"From the first reference image — arrow entering a box or disc. Filled treatments matched best in MDI's bold family.",
+    icons:[
+      {n:"mdi:arrow-right-bold-box",fill:"solid",visual:"box·in",conf:95,top:true,note:"login-square: bold white arrow into a filled square."},
+      {n:"lucide:square-arrow-right-enter",fill:"outline",visual:"box·in",conf:84,note:"Outline equivalent, primary lib."},
+      {n:"tabler:login-2",fill:"outline",visual:"box·in",conf:80,note:"Box + arrow entering."},
+      {n:"radix-icons:enter",fill:"outline",visual:"box·in",conf:78,note:"Minimal enter glyph."},
+      {n:"mdi:arrow-right-bold-circle",fill:"solid",visual:"disc·in",conf:93,top:true,note:"login-circle: bold arrow into a filled disc."},
+      {n:"tabler:circle-arrow-right-filled",fill:"solid",visual:"disc·in",conf:86,note:"Filled disc alt."},
+      {n:"mingcute:arrow-right-circle-fill",fill:"solid",visual:"disc·in",conf:85,note:"Filled disc, MingCute."},
+      {n:"mdi:arrow-right-bold-circle-outline",fill:"outline",visual:"disc·in",conf:80,note:"Outline sibling of the circle pick."},
+    ]},
+  { label:"② Check-out (arrow OUT) — logout glyphs", replaces:"logout / sign-out",
+    desc:"Arrow exiting an open bracket or broken ring. Note the circle one is a BROKEN ring (location-exit), not a plain arrow-circle.",
+    icons:[
+      {n:"lucide:log-out",fill:"outline",visual:"bracket·out",conf:97,top:true,note:"logout-square: open-right bracket + arrow out. Primary lib."},
+      {n:"radix-icons:exit",fill:"outline",visual:"bracket·out",conf:95,note:"Clean exit glyph."},
+      {n:"tabler:logout",fill:"outline",visual:"bracket·out",conf:94,note:"Bracket + arrow out."},
+      {n:"mingcute:exit-line",fill:"outline",visual:"bracket·out",conf:93,note:"MingCute exit."},
+      {n:"material-symbols:logout",fill:"solid",visual:"bracket·out",conf:90,note:"Solid logout (filled weight)."},
+      {n:"mdi:location-exit",fill:"outline",visual:"ring·out",conf:95,top:true,note:"logout-circle: broken ring, gap on right, horizontal arrow out."},
+      {n:"lucide:circle-arrow-out-up-right",fill:"outline",visual:"ring·out",conf:76,note:"Open ring, diagonal arrow out."},
+      {n:"bi:arrow-right-circle-fill",fill:"solid",visual:"disc·out",conf:60,note:"Filled disc sibling for the circle family."},
+    ]},
+  { label:"③ Arrived / Check-in", replaces:"fas fa-plane-arrival",
+    desc:"Plane-down keeps the current metaphor; door/person options are the more 'guest' read.",
+    icons:[
+      {n:"lucide:plane-landing",fill:"outline",visual:"plane",conf:97,top:true,note:"Descending plane + runway. Pairs with plane-takeoff. Primary lib."},
+      {n:"tabler:plane-arrival",fill:"outline",visual:"plane",conf:95,note:"Near-identical to current FA plane-arrival."},
+      {n:"material-symbols:flight-land",fill:"solid",visual:"plane",conf:91,note:"Solid weight — matches the current filled gold icon."},
+      {n:"lucide:log-in",fill:"outline",visual:"door",conf:90,note:"Arrow into door = check-in. Pairs with log-out."},
+      {n:"tabler:door-enter",fill:"outline",visual:"person·door",conf:88,note:"Doorway + arrow in = enter the building."},
+      {n:"bi:box-arrow-in-down",fill:"outline",visual:"box",conf:84,note:"Arrive into a tray metaphor."},
+      {n:"mdi:account-arrow-right",fill:"solid",visual:"person",conf:80,note:"Guest + arrow = arriving guest."},
+      {n:"lucide:user-round-check",fill:"outline",visual:"person",conf:78,note:"Guest checked-in (person + check)."},
+    ]},
+  { label:"④ In House", replaces:"fas fa-hotel",
+    desc:"Building family matches the current facade; bed family reads as 'staying'.",
+    icons:[
+      {n:"lucide:hotel",fill:"outline",visual:"building",conf:95,top:true,note:"Building + window dots + bed inside. Most literal hotel. Primary lib."},
+      {n:"mingcute:hotel-line",fill:"outline",visual:"building",conf:92,note:"Named 'hotel' — facade + arch + windows."},
+      {n:"tabler:building-skyscraper",fill:"outline",visual:"building",conf:88,note:"Tall hotel high-rise, crisp thin line."},
+      {n:"fa6-solid:hotel",fill:"solid",visual:"building",conf:89,note:"Direct fa-hotel successor (solid, same weight as now)."},
+      {n:"material-symbols:apartment",fill:"solid",visual:"building",conf:90,note:"Stepped building + window grid (filled)."},
+      {n:"bi:building-fill",fill:"solid",visual:"building",conf:87,note:"Solid building twin of current glyph."},
+      {n:"lucide:bed-double",fill:"outline",visual:"bed",conf:82,note:"Bed = staying / in-house."},
+      {n:"material-symbols:hotel",fill:"solid",visual:"bed",conf:80,note:"Classic bed-with-headboard hotel glyph."},
+    ]},
+  { label:"⑤ Departures / Check-out", replaces:"fas fa-plane-departure",
+    desc:"Plane-up is the 1:1 swap; door/person are the guest-leaving read.",
+    icons:[
+      {n:"fa6-solid:plane-departure",fill:"solid",visual:"plane",conf:98,top:true,note:"Exact solid twin of current fa-plane-departure. Perfect pair with Arrived."},
+      {n:"material-symbols:flight-takeoff",fill:"solid",visual:"plane",conf:95,note:"Solid ascending plane + runway."},
+      {n:"mdi:airplane-takeoff",fill:"solid",visual:"plane",conf:94,note:"Clean solid takeoff, different library."},
+      {n:"lucide:plane-takeoff",fill:"outline",visual:"plane",conf:90,note:"Primary lib; thin-line (if menu goes outline)."},
+      {n:"tabler:plane-departure-filled",fill:"solid",visual:"plane",conf:88,note:"Solid; pairs with tabler:plane-landing."},
+      {n:"material-symbols:logout",fill:"solid",visual:"door",conf:83,note:"Doorway + arrow out = check-out."},
+      {n:"fa6-solid:right-from-bracket",fill:"solid",visual:"arrow",conf:80,note:"Sign-out arrow, same FA family as menu."},
+      {n:"mdi:exit-run",fill:"solid",visual:"person·door",conf:78,note:"Person running out a door — literal departure."},
+    ]},
+  { label:"⑥ Guest walking in / out (person + door)", replaces:"new — people checking in/out",
+    desc:"True person-in-a-doorway pairs. tabler:door-enter / door-exit are the cleanest IN/OUT set.",
+    icons:[
+      {n:"tabler:door-enter",fill:"outline",visual:"person·door·in",conf:95,top:true,note:"Door + person + arrow IN. Truest 'guest walks in'."},
+      {n:"tabler:door-exit",fill:"outline",visual:"person·door·out",conf:95,top:true,note:"Mirror twin — 'guest walks out'. Clean IN/OUT pair."},
+      {n:"lucide:log-in",fill:"outline",visual:"door·in",conf:90,note:"Primary-lib IN (arrow into door)."},
+      {n:"lucide:log-out",fill:"outline",visual:"door·out",conf:90,note:"Primary-lib OUT, exact mirror."},
+      {n:"mdi:exit-run",fill:"solid",visual:"person·door",conf:86,note:"Bold human silhouette through a door (solid, OUT)."},
+      {n:"fa6-solid:right-to-bracket",fill:"solid",visual:"door·in",conf:84,note:"Solid IN — lowest-friction for a FA-solid menu."},
+      {n:"fa6-solid:right-from-bracket",fill:"solid",visual:"door·out",conf:84,note:"Solid OUT twin."},
+      {n:"bi:box-arrow-in-right",fill:"outline",visual:"box·in",conf:83,note:"Bootstrap outline walk-in; pairs with box-arrow-right."},
+    ]},
+  { label:"⑦ Hotel support (luggage · bell · key)", replaces:"supporting set",
+    desc:"Pair with the menu. Solid picks match the current filled weight; ic/ph are external sets (CDN only).",
+    icons:[
+      {n:"fa6-solid:bell-concierge",fill:"solid",visual:"bell",conf:92,top:true,note:"Concierge dome bell (solid) — clearest reception read."},
+      {n:"material-symbols:luggage",fill:"solid",visual:"luggage",conf:90,note:"Wheeled suitcase, same Material weight as menu."},
+      {n:"material-symbols:concierge",fill:"solid",visual:"bell",conf:88,note:"Dome bell + desk = concierge desk."},
+      {n:"mdi:room-service",fill:"solid",visual:"bell",conf:84,note:"Covered tray on stand — hotel service."},
+      {n:"ic:round-key",fill:"solid",visual:"key",conf:86,note:"Room key (external 'ic' set)."},
+      {n:"ph:suitcase-rolling-fill",fill:"solid",visual:"luggage",conf:82,note:"Phosphor rolling suitcase (external 'ph' set)."},
+      {n:"lucide:concierge-bell",fill:"outline",visual:"bell",conf:78,note:"Outline concierge bell (if menu goes line-style)."},
+      {n:"lucide:luggage",fill:"outline",visual:"luggage",conf:75,note:"Outline suitcase, primary lib."},
+    ]},
+];
+
+// ---- live menu mockup (top picks) ----
+const MENU = [
+  {n:"lucide:plane-landing", t:"Arrived", active:true},
+  {n:"lucide:hotel", t:"In House"},
+  {n:"fa6-solid:plane-departure", t:"Departures"},
+  {sep:true},
+  {n:"tabler:door-enter", t:"Check-in"},
+  {n:"tabler:door-exit", t:"Check-out"},
+];
+const panel = document.getElementById("panel");
+MENU.forEach(m=>{
+  if(m.sep){ const s=document.createElement("div"); s.className="sep"; panel.appendChild(s); return; }
+  const d=document.createElement("div"); d.className="mi"+(m.active?" active":"");
+  d.innerHTML=`<iconify-icon icon="${m.n}"></iconify-icon><span>${m.t}</span>`;
+  panel.appendChild(d);
+});
+
+// ---- catalog ----
+const cat = document.getElementById("catalog");
+DATA.forEach(group=>{
+  const sec=document.createElement("section"); sec.className="grp-sec";
+  sec.innerHTML=`<div class="grp-head"><h2>${group.label}</h2>
+    <span class="replaces">replaces <code>${group.replaces}</code></span></div>
+    <div class="grp-desc">${group.desc}</div>`;
+  const grid=document.createElement("div"); grid.className="grid";
+  group.icons.forEach(ic=>{
+    const prefix=ic.n.split(":")[0];
+    const inb=BUNDLED.has(prefix);
+    const a=document.createElement("a");
+    a.className="card"+(ic.top?" top":""); a.href=iconifyUrl(ic.n); a.target="_blank"; a.rel="noopener";
+    a.innerHTML=`
+      <div class="preview"><iconify-icon icon="${ic.n}"></iconify-icon></div>
+      <div class="nm"><span class="bundle ${inb?'in':'ext'}" title="${inb?'in your bundled sets':'external set'}"></span>${ic.n}</div>
+      <div class="meta"><span class="pill">${ic.fill}</span><span class="pill">${ic.visual}</span><span class="pill">${ic.conf}%</span></div>
+      <div class="note">${ic.note}</div>
+      <div class="go">Open page →</div>`;
+    grid.appendChild(a);
+  });
+  sec.appendChild(grid); cat.appendChild(sec);
+});
+
+// ---- toolbar controls ----
+const root=document.documentElement;
+function wire(attr, cssVar){
+  document.querySelectorAll(`.btn[data-${attr}]`).forEach(b=>{
+    b.addEventListener("click",()=>{
+      b.parentElement.querySelectorAll(".btn").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      root.style.setProperty(cssVar, b.getAttribute("data-"+attr));
+    });
+  });
+}
+wire("color","--icon-color");
+wire("bg","--icon-bg");
+document.getElementById("size").addEventListener("input",e=>{
+  root.style.setProperty("--icon-size", e.target.value+"px");
+});
+</script>
+</body>
+</html>
