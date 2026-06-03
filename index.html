@@ -7,32 +7,39 @@
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 <style>
   :root{
-    /* palette sampled from the original screenshots */
     --navy:#413D5A; --navy2:#4A465F; --gold:#E5B362; --gold2:#EAC261;
     --teal:#5EA3A1; --white:#FFFFFF; --lav:#EFF0F7; --ink:#2B2B3A; --mute:#8A88A0;
-    /* live preview controls */
     --icon-color:var(--gold2); --icon-bg:var(--navy); --icon-size:30px;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     color:var(--ink);background:var(--lav);line-height:1.45}
   a{color:inherit}
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 80px}
-
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 22px 80px}
   header h1{margin:0 0 4px;font-size:26px;letter-spacing:-.02em}
-  header p{margin:0;color:#555;max-width:760px}
+  header p{margin:0;color:#555;max-width:780px}
   .sub{font-size:14px}
 
-  /* palette legend */
-  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+  /* tabs */
+  .tabs{position:sticky;top:0;z-index:20;display:flex;gap:4px;background:var(--lav);
+    border-bottom:2px solid #ddd9ec;margin:16px 0 22px;padding-top:6px}
+  .tab{padding:11px 20px;cursor:pointer;font-weight:700;font-size:14px;color:#8a87a0;border:none;
+    background:none;border-bottom:3px solid transparent;margin-bottom:-2px;display:flex;align-items:center;gap:8px}
+  .tab:hover{color:var(--navy)}
+  .tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+  .tab .cnt{font-size:11px;background:#e2e0f0;color:#6b6890;border-radius:999px;padding:1px 8px;font-weight:700}
+  .tab.active .cnt{background:var(--gold2);color:#7a5d16}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 18px}
   .chip{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e3e2ef;
     border-radius:10px;padding:6px 10px;font-size:12px;font-variant-numeric:tabular-nums}
   .dot{width:16px;height:16px;border-radius:5px;border:1px solid rgba(0,0,0,.08)}
 
-  /* toolbar */
-  .toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:14px;align-items:center;
-    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #e3e2ef;
-    border-radius:14px;padding:12px 16px;margin:14px 0 26px;box-shadow:0 4px 18px rgba(65,61,90,.06)}
+  .toolbar{position:sticky;top:50px;z-index:10;display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+    background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid #e3e2ef;
+    border-radius:14px;padding:12px 16px;margin:0 0 24px;box-shadow:0 4px 18px rgba(65,61,90,.06)}
   .toolbar .grp{display:flex;align-items:center;gap:6px}
   .toolbar label{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
   .btn{cursor:pointer;border:1px solid #d8d6e6;background:#fff;border-radius:9px;padding:6px 11px;
@@ -42,19 +49,17 @@
   .btn .sw{width:13px;height:13px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
   input[type=range]{accent-color:var(--navy)}
 
-  /* live menu mockup */
   .mock{display:grid;grid-template-columns:260px 1fr;gap:24px;margin:0 0 30px;align-items:start}
-  .panel{background:var(--navy);border-radius:16px;padding:18px 14px;box-shadow:0 12px 34px rgba(65,61,90,.28)}
-  .panel .mi{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:9px;cursor:default}
-  .panel .mi iconify-icon{font-size:22px;color:var(--gold2);width:24px;text-align:center}
-  .panel .mi span{color:#fff;font-size:15px}
-  .panel .mi.active span{color:var(--gold2);font-weight:600}
-  .panel .mi:hover{background:rgba(255,255,255,.05)}
-  .panel .sep{height:1px;background:rgba(255,255,255,.12);margin:8px 6px}
+  .panelmenu{background:var(--navy);border-radius:16px;padding:18px 14px;box-shadow:0 12px 34px rgba(65,61,90,.28)}
+  .panelmenu .mi{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:9px}
+  .panelmenu .mi iconify-icon{font-size:22px;color:var(--gold2);width:24px;text-align:center}
+  .panelmenu .mi span{color:#fff;font-size:15px}
+  .panelmenu .mi.active span{color:var(--gold2);font-weight:600}
+  .panelmenu .mi:hover{background:rgba(255,255,255,.05)}
+  .panelmenu .sep{height:1px;background:rgba(255,255,255,.12);margin:8px 6px}
   .mocknote{font-size:13px;color:#555;align-self:center}
   .mocknote b{color:var(--ink)}
 
-  /* sections */
   section.grp-sec{margin:34px 0 0}
   .grp-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 4px}
   .grp-head h2{margin:0;font-size:19px;letter-spacing:-.01em}
@@ -62,13 +67,12 @@
   .replaces code{color:var(--gold2);font-size:11px}
   .grp-desc{margin:2px 0 16px;color:#666;font-size:13.5px}
 
-  /* icon grid */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:14px}
   .card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid #e6e5f1;
     border-radius:14px;padding:14px;text-decoration:none;transition:.14s;overflow:hidden}
   .card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 10px 26px rgba(65,61,90,.12)}
   .card.top{border-color:var(--gold);box-shadow:0 0 0 2px rgba(229,179,98,.35)}
-  .card.top::after{content:"★ TOP PICK";position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;
+  .card.top::after{content:"\2605 TOP PICK";position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;
     letter-spacing:.06em;color:#8a6d1f;background:var(--gold2);padding:3px 7px;border-radius:999px}
   .preview{height:96px;border-radius:11px;background:var(--icon-bg);display:flex;align-items:center;
     justify-content:center;margin-bottom:11px;transition:.14s}
@@ -83,6 +87,34 @@
   .go{margin-top:9px;font-size:11.5px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:4px}
   .card:hover .go{color:var(--gold)}
 
+  /* libraries tab */
+  .libsintro{color:#555;font-size:14px;margin:0 0 14px;max-width:820px}
+  .browsers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 28px}
+  .browsers a{display:flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;
+    border-radius:12px;padding:12px 18px;font-weight:700;font-size:14px;box-shadow:0 8px 22px rgba(65,61,90,.18)}
+  .browsers a:hover{background:#4a4566}
+  .browsers a iconify-icon{font-size:20px;color:var(--gold2)}
+  .libgroup{margin:26px 0 0}
+  .libgroup h2{font-size:17px;margin:0 0 12px;letter-spacing:-.01em}
+  .libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+  .libcard{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid #e6e5f1;border-radius:14px;
+    padding:13px 15px;text-decoration:none;transition:.14s}
+  .libcard:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 10px 26px rgba(65,61,90,.12)}
+  .libtile{width:54px;height:54px;flex:none;border-radius:12px;background:var(--navy);display:flex;
+    align-items:center;justify-content:center}
+  .libtile iconify-icon{font-size:28px;color:var(--gold2)}
+  .libname{font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px}
+  .libmeta{font-size:11.5px;color:var(--mute);margin-top:3px;display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .libmeta code{background:#f3f2fa;border-radius:5px;padding:1px 6px;font-size:11px;color:var(--navy);font-weight:700}
+  .libnote{font-size:11px;color:#888;margin-top:4px}
+  .libgo{font-size:11.5px;font-weight:700;color:var(--navy);margin-top:5px}
+  .libcard:hover .libgo{color:var(--gold)}
+
+  .cheat{margin-top:30px;background:#fff;border:1px solid #e3e2ef;border-radius:14px;padding:16px 18px}
+  .cheat h3{margin:0 0 8px;font-size:14px}
+  .cheat code{background:#f3f2fa;border:1px solid #e7e6f2;border-radius:5px;padding:1px 6px;font-size:12px}
+  .cheat .row{font-size:13px;margin:6px 0;color:#555}
+
   footer{margin-top:46px;font-size:12.5px;color:#777;border-top:1px solid #e0dfee;padding-top:18px}
   footer code{background:#fff;border:1px solid #e3e2ef;border-radius:5px;padding:1px 6px;font-size:11.5px}
   .keyrow{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
@@ -91,9 +123,18 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>Hotel Check-in / Check-out — Icon Catalog</h1>
-    <p class="sub">Every icon found by the swarm, rendered live (Iconify) in the palette sampled from the original images. All are <b>monochrome</b> (single <code>currentColor</code>) — click any card to open its page and grab SVG / PNG / JSX in any color.</p>
+    <h1>Hotel Check-in / Check-out — Icons</h1>
+    <p class="sub">Icons found for the hotel sidebar, plus a reference of every icon library available. All monochrome (single <code>currentColor</code>). Click anything to open its page and grab SVG / PNG / JSX.</p>
+  </header>
 
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="catalog"><iconify-icon icon="lucide:layout-grid"></iconify-icon> Icon Catalog</button>
+    <button class="tab" data-tab="libs"><iconify-icon icon="lucide:library"></iconify-icon> Libraries <span class="cnt" id="libcount"></span></button>
+  </div>
+
+  <!-- ============ TAB 1: CATALOG ============ -->
+  <div class="panel active" id="tab-catalog">
     <div class="legend">
       <span class="chip"><span class="dot" style="background:#413D5A"></span>#413D5A navy</span>
       <span class="chip"><span class="dot" style="background:#E5B362"></span>#E5B362 gold</span>
@@ -101,55 +142,68 @@
       <span class="chip"><span class="dot" style="background:#5EA3A1"></span>#5EA3A1 teal</span>
       <span class="chip"><span class="dot" style="background:#FFFFFF"></span>#FFFFFF white</span>
     </div>
-  </header>
 
-  <div class="toolbar">
-    <div class="grp">
-      <label>Icon color</label>
-      <button class="btn active" data-color="var(--gold2)"><span class="sw" style="background:#EAC261"></span>Gold</button>
-      <button class="btn" data-color="var(--teal)"><span class="sw" style="background:#5EA3A1"></span>Teal</button>
-      <button class="btn" data-color="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
-      <button class="btn" data-color="var(--ink)"><span class="sw" style="background:#2B2B3A"></span>Neutral</button>
+    <div class="toolbar">
+      <div class="grp">
+        <label>Icon color</label>
+        <button class="btn active" data-color="var(--gold2)"><span class="sw" style="background:#EAC261"></span>Gold</button>
+        <button class="btn" data-color="var(--teal)"><span class="sw" style="background:#5EA3A1"></span>Teal</button>
+        <button class="btn" data-color="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
+        <button class="btn" data-color="var(--ink)"><span class="sw" style="background:#2B2B3A"></span>Neutral</button>
+      </div>
+      <div class="grp">
+        <label>Tile</label>
+        <button class="btn active" data-bg="var(--navy)"><span class="sw" style="background:#413D5A"></span>Navy</button>
+        <button class="btn" data-bg="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
+        <button class="btn" data-bg="#F3F2FA"><span class="sw" style="background:#F3F2FA"></span>Light</button>
+      </div>
+      <div class="grp">
+        <label>Size</label>
+        <input type="range" min="18" max="56" value="30" id="size" />
+      </div>
     </div>
-    <div class="grp">
-      <label>Tile</label>
-      <button class="btn active" data-bg="var(--navy)"><span class="sw" style="background:#413D5A"></span>Navy</button>
-      <button class="btn" data-bg="#FFFFFF"><span class="sw" style="background:#fff"></span>White</button>
-      <button class="btn" data-bg="#F3F2FA"><span class="sw" style="background:#F3F2FA"></span>Light</button>
+
+    <div class="mock">
+      <div class="panelmenu" id="panelmenu"></div>
+      <div class="mocknote">
+        <b>Live menu preview</b> — the top-pick icons dropped into a mock of your real sidebar
+        (navy <code>#413D5A</code> + gold <code>#EAC261</code>). The monochrome, one-color-from-code
+        look: change one CSS variable and the whole set recolors. Try teal / neutral / white above.
+      </div>
     </div>
-    <div class="grp">
-      <label>Size</label>
-      <input type="range" min="18" max="56" value="30" id="size" />
-    </div>
+
+    <div id="catalog"></div>
+
+    <footer>
+      <div><b>Legend:</b> <span style="color:#3fae6b">●</span> already in your bundled Iconify sets (zero-install) &nbsp;·&nbsp; <span style="color:#c9c7d8">●</span> external set (needs <code>@iconify-json/&lt;set&gt;</code> or use as React/Radix).</div>
+      <div class="keyrow">
+        <span>Iconify CSS: <code>&lt;span class="iconify lucide--plane-landing" /&gt;</code></span>
+        <span>Lucide React: <code>import { PlaneLanding } from "lucide-react"</code></span>
+      </div>
+    </footer>
   </div>
 
-  <!-- live menu mockup -->
-  <div class="mock">
-    <div class="panel" id="panel"></div>
-    <div class="mocknote">
-      <b>Live menu preview</b> — the top-pick icons dropped into a mock of your real sidebar
-      (navy <code>#413D5A</code> + gold <code>#EAC261</code>). This is the monochrome,
-      one-color-from-code look the proposal is arguing for: change one CSS variable and the
-      whole set recolors. Use the toolbar above to try teal / neutral / white.
+  <!-- ============ TAB 2: LIBRARIES ============ -->
+  <div class="panel" id="tab-libs">
+    <p class="libsintro">Every icon library available to this project — <b>~40,000 icons</b> total. Click any to browse its full set; each page lets you copy SVG / PNG / JSX in any color. <span style="color:#3fae6b">●</span> = bundled here (zero-install).</p>
+    <div class="browsers" id="browsers"></div>
+    <div id="libs"></div>
+
+    <div class="cheat">
+      <h3>How to use any of these</h3>
+      <div class="row">▸ <b>Iconify (CSS class)</b> — swap <code>:</code> for <code>--</code>: &nbsp; website <code>mdi:home</code> → code <code>&lt;span class="iconify mdi--home" /&gt;</code></div>
+      <div class="row">▸ <b>Iconify (React)</b> — <code>import { Icon } from "@iconify/react"</code> → <code>&lt;Icon icon="tabler:door-enter" /&gt;</code></div>
+      <div class="row">▸ <b>Lucide</b> — <code>import { House } from "lucide-react"</code> → <code>&lt;House className="size-4" /&gt;</code></div>
+      <div class="row">▸ <b>Radix</b> — <code>import { HomeIcon } from "@radix-ui/react-icons"</code></div>
     </div>
   </div>
-
-  <main id="catalog"></main>
-
-  <footer>
-    <div><b>Legend:</b> <span style="color:#3fae6b">●</span> already in your bundled Iconify sets (zero-install) &nbsp;·&nbsp; <span style="color:#c9c7d8">●</span> external set (needs <code>@iconify-json/&lt;set&gt;</code> or use as React/Radix).</div>
-    <div class="keyrow">
-      <span>In your code (Iconify CSS): <code>&lt;span class="iconify lucide--plane-landing" /&gt;</code></span>
-      <span>Lucide React: <code>import { PlaneLanding } from "lucide-react"</code></span>
-    </div>
-  </footer>
 </div>
 
 <script>
-// bundled Iconify sets present in the project's package.json (@iconify-json/*)
 const BUNDLED = new Set(["bi","fa","fa-solid","fa6-solid","line-md","lucide","mage","material-symbols","mdi","mingcute","tabler"]);
 const iconifyUrl = n => "https://icon-sets.iconify.design/" + n.replace(":","/") + "/";
 
+/* ---------- CATALOG DATA ---------- */
 const DATA = [
   { label:"① Check-in (arrow IN) — login glyphs", replaces:"login / sign-in",
     desc:"From the first reference image — arrow entering a box or disc. Filled treatments matched best in MDI's bold family.",
@@ -164,7 +218,7 @@ const DATA = [
       {n:"mdi:arrow-right-bold-circle-outline",fill:"outline",visual:"disc·in",conf:80,note:"Outline sibling of the circle pick."},
     ]},
   { label:"② Check-out (arrow OUT) — logout glyphs", replaces:"logout / sign-out",
-    desc:"Arrow exiting an open bracket or broken ring. Note the circle one is a BROKEN ring (location-exit), not a plain arrow-circle.",
+    desc:"Arrow exiting an open bracket or broken ring. The circle one is a BROKEN ring (location-exit), not a plain arrow-circle.",
     icons:[
       {n:"lucide:log-out",fill:"outline",visual:"bracket·out",conf:97,top:true,note:"logout-square: open-right bracket + arrow out. Primary lib."},
       {n:"radix-icons:exit",fill:"outline",visual:"bracket·out",conf:95,note:"Clean exit glyph."},
@@ -237,7 +291,6 @@ const DATA = [
     ]},
 ];
 
-// ---- live menu mockup (top picks) ----
 const MENU = [
   {n:"lucide:plane-landing", t:"Arrived", active:true},
   {n:"lucide:hotel", t:"In House"},
@@ -246,15 +299,47 @@ const MENU = [
   {n:"tabler:door-enter", t:"Check-in"},
   {n:"tabler:door-exit", t:"Check-out"},
 ];
-const panel = document.getElementById("panel");
+
+/* ---------- LIBRARIES DATA ---------- */
+const BROWSERS = [
+  {name:"Iconify — 200k+ icons, all sets", icon:"mdi:magnify", url:"https://icon-sets.iconify.design/"},
+  {name:"Lucide icons", icon:"lucide:feather", url:"https://lucide.dev/icons"},
+  {name:"Radix icons", icon:"radix-icons:component-1", url:"https://www.radix-ui.com/icons"},
+];
+const LIBS = [
+  { group:"Primary", items:[
+    {name:"Lucide", prefix:"lucide", rep:"lucide:house", count:"1,655", license:"ISC", url:"https://lucide.dev/icons", bundled:true, note:"shadcn default · React components (lucide-react)"},
+    {name:"Radix Icons", prefix:"radix-icons", rep:"radix-icons:home", count:"342", license:"MIT", url:"https://www.radix-ui.com/icons", bundled:false, note:"Minimal 15×15 · shadcn legacy (@radix-ui/react-icons)"},
+  ]},
+  { group:"Bundled Iconify sets — 11 (zero-install in this project)", items:[
+    {name:"Material Design Icons", prefix:"mdi", rep:"mdi:home", count:"~7,400", license:"Apache 2.0", url:"https://icon-sets.iconify.design/mdi/", bundled:true},
+    {name:"Material Symbols", prefix:"material-symbols", rep:"material-symbols:home", count:"15,862", license:"Apache 2.0", url:"https://icon-sets.iconify.design/material-symbols/", bundled:true},
+    {name:"Tabler", prefix:"tabler", rep:"tabler:home", count:"6,033", license:"MIT", url:"https://icon-sets.iconify.design/tabler/", bundled:true},
+    {name:"Lucide (via Iconify)", prefix:"lucide", rep:"lucide:house", count:"1,655", license:"ISC", url:"https://icon-sets.iconify.design/lucide/", bundled:true},
+    {name:"Bootstrap Icons", prefix:"bi", rep:"bi:house-door-fill", count:"~2,000", license:"MIT", url:"https://icon-sets.iconify.design/bi/", bundled:true},
+    {name:"Font Awesome 5 Solid", prefix:"fa-solid", rep:"fa-solid:home", count:"~1,000", license:"CC BY 4.0", url:"https://icon-sets.iconify.design/fa-solid/", bundled:true},
+    {name:"Font Awesome 6 Solid", prefix:"fa6-solid", rep:"fa6-solid:house", count:"1,407", license:"CC BY 4.0", url:"https://icon-sets.iconify.design/fa6-solid/", bundled:true},
+    {name:"Font Awesome 4", prefix:"fa", rep:"fa:home", count:"~680", license:"CC BY 4.0", url:"https://icon-sets.iconify.design/fa/", bundled:true},
+    {name:"Material Line (animated)", prefix:"line-md", rep:"line-md:home", count:"~310", license:"MIT", url:"https://icon-sets.iconify.design/line-md/", bundled:true},
+    {name:"Mage", prefix:"mage", rep:"mage:home", count:"~550", license:"MIT", url:"https://icon-sets.iconify.design/mage/", bundled:true},
+    {name:"MingCute", prefix:"mingcute", rep:"mingcute:home-1-fill", count:"~2,800", license:"Apache 2.0", url:"https://icon-sets.iconify.design/mingcute/", bundled:true},
+  ]},
+  { group:"External sets — used by 2 catalog icons (need install)", items:[
+    {name:"IC · Google Material", prefix:"ic", rep:"ic:round-home", count:"~10,000", license:"Apache 2.0", url:"https://icon-sets.iconify.design/ic/", bundled:false, note:"ic:round-key · add @iconify-json/ic"},
+    {name:"Phosphor", prefix:"ph", rep:"ph:house-fill", count:"~9,000", license:"MIT", url:"https://icon-sets.iconify.design/ph/", bundled:false, note:"ph:suitcase-rolling-fill · add @iconify-json/ph"},
+  ]},
+];
+
+/* ---------- RENDER: menu ---------- */
+const panelmenu = document.getElementById("panelmenu");
 MENU.forEach(m=>{
-  if(m.sep){ const s=document.createElement("div"); s.className="sep"; panel.appendChild(s); return; }
+  if(m.sep){ const s=document.createElement("div"); s.className="sep"; panelmenu.appendChild(s); return; }
   const d=document.createElement("div"); d.className="mi"+(m.active?" active":"");
   d.innerHTML=`<iconify-icon icon="${m.n}"></iconify-icon><span>${m.t}</span>`;
-  panel.appendChild(d);
+  panelmenu.appendChild(d);
 });
 
-// ---- catalog ----
+/* ---------- RENDER: catalog ---------- */
 const cat = document.getElementById("catalog");
 DATA.forEach(group=>{
   const sec=document.createElement("section"); sec.className="grp-sec";
@@ -263,13 +348,12 @@ DATA.forEach(group=>{
     <div class="grp-desc">${group.desc}</div>`;
   const grid=document.createElement("div"); grid.className="grid";
   group.icons.forEach(ic=>{
-    const prefix=ic.n.split(":")[0];
-    const inb=BUNDLED.has(prefix);
+    const inb=BUNDLED.has(ic.n.split(":")[0]);
     const a=document.createElement("a");
     a.className="card"+(ic.top?" top":""); a.href=iconifyUrl(ic.n); a.target="_blank"; a.rel="noopener";
     a.innerHTML=`
       <div class="preview"><iconify-icon icon="${ic.n}"></iconify-icon></div>
-      <div class="nm"><span class="bundle ${inb?'in':'ext'}" title="${inb?'in your bundled sets':'external set'}"></span>${ic.n}</div>
+      <div class="nm"><span class="bundle ${inb?'in':'ext'}"></span>${ic.n}</div>
       <div class="meta"><span class="pill">${ic.fill}</span><span class="pill">${ic.visual}</span><span class="pill">${ic.conf}%</span></div>
       <div class="note">${ic.note}</div>
       <div class="go">Open page →</div>`;
@@ -278,7 +362,48 @@ DATA.forEach(group=>{
   sec.appendChild(grid); cat.appendChild(sec);
 });
 
-// ---- toolbar controls ----
+/* ---------- RENDER: libraries ---------- */
+const brow = document.getElementById("browsers");
+BROWSERS.forEach(b=>{
+  const a=document.createElement("a"); a.href=b.url; a.target="_blank"; a.rel="noopener";
+  a.innerHTML=`<iconify-icon icon="${b.icon}"></iconify-icon>${b.name}`;
+  brow.appendChild(a);
+});
+const libsEl = document.getElementById("libs");
+let libTotal=0;
+LIBS.forEach(g=>{
+  const sec=document.createElement("div"); sec.className="libgroup";
+  sec.innerHTML=`<h2>${g.group}</h2>`;
+  const grid=document.createElement("div"); grid.className="libgrid";
+  g.items.forEach(l=>{
+    libTotal++;
+    const a=document.createElement("a"); a.className="libcard"; a.href=l.url; a.target="_blank"; a.rel="noopener";
+    a.innerHTML=`
+      <div class="libtile"><iconify-icon icon="${l.rep}"></iconify-icon></div>
+      <div>
+        <div class="libname"><span class="bundle ${l.bundled?'in':'ext'}"></span>${l.name}</div>
+        <div class="libmeta"><code>${l.prefix}</code><span>${l.count} icons</span><span>· ${l.license}</span></div>
+        ${l.note?`<div class="libnote">${l.note}</div>`:""}
+        <div class="libgo">Browse →</div>
+      </div>`;
+    grid.appendChild(a);
+  });
+  sec.appendChild(grid); libsEl.appendChild(sec);
+});
+document.getElementById("libcount").textContent = libTotal;
+
+/* ---------- TABS ---------- */
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");
+    document.getElementById("tab-"+t.getAttribute("data-tab")).classList.add("active");
+    window.scrollTo({top:0});
+  });
+});
+
+/* ---------- toolbar ---------- */
 const root=document.documentElement;
 function wire(attr, cssVar){
   document.querySelectorAll(`.btn[data-${attr}]`).forEach(b=>{
